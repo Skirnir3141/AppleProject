@@ -29,7 +29,7 @@ library(scales)
 library(cowplot)
 library(stringr)
 
-# TODO: UPDATE THIS SOON
+# TODO: UPDATE THIS SOON NOW
 # Note that executing some of the code below will of course be dependent on 
 # your directory structure and Plink installation. SNP data was downloaded from
 # Dyrad -- https://datadryad.org/stash/dataset/doi:10.5061/dryad.zkh1893cd -- 
