@@ -126,9 +126,6 @@ apple.p.metadata$Ploidy <- apply(
 # Remove unnecessary columns
 apple.p.metadata <- apple.p.metadata[, c(1:6, 15)]
 
-# Use Plink to calculate inbreeding coefficient per accession
-system("/usr/local/bin/Plink/plink --file ./Data/Snps/abc_combined_maf001_sort_vineland_imputed --extract plink.prune.in --allow-no-sex --geno .05 --mind .1 --maf .01 --het --out ./Data/Snps/ploidy-check")
-
 # Join inbreeding coefficient to accession data
 ploidy.check <- read.table("./Data/Snps/ploidy-check.het", header = TRUE)
 apple.p.metadata <- dplyr::left_join(apple.p.metadata, ploidy.check[, c("IID", "F")], by = join_by(apple_id == IID))

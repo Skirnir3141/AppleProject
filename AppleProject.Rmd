@@ -29,17 +29,13 @@ library(scales)
 library(cowplot)
 library(stringr)
 
-# Note that executing the code below is of course dependent on your directory
-# structure and Plink installation. Directory structure from
-# https://github.com/Skirnir3141/AppleProject/ should be maintained. All files
-# necessary to run this are uploaded on github except for the
-# abc_combined_maf001_sort_vineland_imputed .map and .ped files, which need to
-# be downloaded from https://datadryad.org/stash/dataset/doi:10.5061/dryad.zkh1893cd
-# and extracted to the ./Data/Snps folder. Plink v1.90 should be downloaded from
-# the cog-genomics.org website (https://www.cog-genomics.org/plink2/) and
-# installed in the /usr/local/bin folder on a computer running linux and made
-# globally available per the instructions in this YouTube video:
-# https://www.youtube.com/watch?v=qYo6BbI2KQI&ab_channel=Huy.
+# NOTE: All data required to Knit this Rmd are available in the github
+# directory. Some of those data are taken directly from online sources. However,
+# some are derived using two other files: PloidismExploration.R and 
+# PlinkRuns.R files. PloidismExploration.R does not require any additional files
+# to execute. But, PlinkRuns.R does. This is because it is operating on SNP data
+# files that are too large to upload to github. Directions for downloading and
+# extracting those files are at the top of PlinkRuns.R.
 ```
 
 The domestic apple (*Malus domestica*) is one of the oldest, most commonly cultivated, and most valuable fruit crops in the world, ranking second only to the banana in global gross production value (O'Rourke, 2021). Although today *M. domestica* is produced by many countries -- e.g., America, Chile, New Zealand -- it likely originated in Central Asia or Western China and evolved from other *Malus* species, primarily *M. sieversii* (Volk et al., 2021). Following initial domestication, *M. domestica* spread from Asia along the Silk Road to Europe and beyond (Volk et al., 2021).
@@ -119,22 +115,6 @@ keep.p3$IID <- sort(
 write.table(keep.p1, "./Data/keep.p1.tsv", sep = "\t", row.names = FALSE)
 write.table(keep.p2, "./Data/keep.p2.tsv", sep = "\t", row.names = FALSE)
 write.table(keep.p3, "./Data/keep.p3.tsv", sep = "\t", row.names = FALSE)
-
-# Prune SNPS data to remove SNPs in linkage disequilibrium
-# Can't quite figure out how to get Plink to output files here to a given
-# directory, so I'm just changing the wd back and forth as a hack.
-setwd("/home/skirnir314/EECMSc/AppleProject/Data/Snps")
-system("/usr/local/bin/Plink/plink --file abc_combined_maf001_sort_vineland_imputed --indep-pairwise 10 3 0.5")
-setwd("/home/skirnir314/EECMSc/AppleProject")
-
-# Run IBD analysis in Plink for the three time periods
-system("/usr/local/bin/Plink/plink --file ./Data/Snps/abc_combined_maf001_sort_vineland_imputed --keep ./Data/keep.p1.tsv --extract ./Data/Snps/plink.prune.in --allow-no-sex --geno .05 --mind .1 --maf .01 --genome --out ./Data/Snps/p1_ibd")
-system("/usr/local/bin/Plink/plink --file ./Data/Snps/abc_combined_maf001_sort_vineland_imputed --keep ./Data/keep.p2.tsv --extract ./Data/Snps/plink.prune.in --allow-no-sex --geno .05 --mind .1 --maf .01 --genome --out ./Data/Snps/p2_ibd")
-system("/usr/local/bin/Plink/plink --file ./Data/Snps/abc_combined_maf001_sort_vineland_imputed --keep ./Data/keep.p3.tsv --extract ./Data/Snps/plink.prune.in --allow-no-sex --geno .05 --mind .1 --maf .01 --genome --out ./Data/Snps/p3_ibd")
-
-# Get the genetic distance between individuals using Plink (this is for all
-# periods combined)
-system("/usr/local/bin/Plink/plink --file ./Data/Snps/abc_combined_maf001_sort_vineland_imputed --extract ./Data/Snps/plink.prune.in --allow-no-sex --geno .05 --mind .1 --maf .01 --distance-matrix --out ./Data/Snps/pca")
 
 # Import ibd results
 p1.ibd <- read.table("./Data/Snps/p1_ibd.genome", header = TRUE)
