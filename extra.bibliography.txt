@@ -1,0 +1,13 @@
+## Bibliography
+
+Baric, S., Storti, A., Hofer, M., Guerra, W., & Dalla Via, J. (2020) [Molecular Genetic Identification of Apple Cultivars Based on Microsatellite DNA Analysis. I. The Database of 600 Validated Profiles](https://doi.org/10.1007/s10341-020-00483-0). *Erwerbs-Obstbau*. 62, 117-154.
+
+Mészáros, G., Mészárosová, M., &  Geretschläger, A. (2020) [Comparison of identity by descent estimates with Plink and refinedIBD in dogs](https://doi.org/10.15414/afz.2020.23.04.213-216). *Acta Fytotechn Zootechn*. 23 (4), 213-216.
+
+Watts, S., Migicovsky, Z., McClure, K.A., Yu, C.H.J., Amyotte, B., Baker, T., Bowlby, D., Burgher-MacLellan, K., Butler, L., Donald, R., Fan, L., Fillmore, S., Flewelling, J., Gardner, K., Hodges, M., Hughes, T., Jagadeesan, V., Lewis, N., MacDonell, E., MacVicar, L., McElroy, M., Money, D., O'Hara, M., Ong, Q., Palmer, L.C., Sawler, J., Vinqvist-Tymchuk, M., Rupasinghe, HPV., DeLong, J.M., Forney, C.F., Song, J., & Myles, S. (2021) Quantifying apple diversity: A phenomic characterization of Canada’s Apple Biodiversity Collection. *Plants People Planet*. 3 (6), 747-760. https://doi.org/10.1002/ppp3.10211
+
+Xue, H., Zhang, B., Tian, J., Chen, M., Zhang, Y., Zhang, Z., & Ma, Y. (2017) Comparison of the morphology, growth and development of diploid and autotetraploid ‘Hanfu’ apple trees. *Scientia Horticulturae*. 225, 277-285. https://doi.org/10.1016/j.scienta.2017.06.059
+
+Podwyszyńska, M., Markiewicz, M., Matysiak, B., & Marasek-Ciołakowska, A. (2021) Apple Autotetraploids with Enhanced Resistance to Apple Scab (*Venturia inaequalis*) Due to Genome Duplication-Phenotypic and Genetic Evaluation. *International Journal of Molecular Sciences*. 22 (2), 527. https://doi.org/10.3390/ijms22020527
+
+Robinson, D.O., Coate, J.E., Singh, A., Hong, L., Bush, M., Doyle, J.J., & Roeder, A.H.K. (2018) Ploidy and Size at Multiple Scales in the Arabidopsis Sepal. *The Plant Cell*. 30 (10), 2308-2329. https://doi.org/10.1105/tpc.18.00344 

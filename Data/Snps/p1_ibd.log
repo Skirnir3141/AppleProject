@@ -1,0 +1,41 @@
+PLINK v1.90b7.2 64-bit (11 Dec 2023)
+Options in effect:
+  --allow-no-sex
+  --extract ./Data/Snps/plink.prune.in
+  --file ./Data/Snps/abc_combined_maf001_sort_vineland_imputed
+  --geno .05
+  --genome
+  --keep ./Data/keep.p1.tsv
+  --maf .01
+  --mind .1
+  --out ./Data/Snps/p1_ibd
+
+Hostname: skirnir314-XPS-9320
+Working directory: /home/skirnir314/EECMSc/AppleProject
+Start time: Fri Feb 16 12:59:12 2024
+
+Random number seed: 1708088352
+31714 MB RAM detected; reserving 15857 MB for main workspace.
+Scanning .ped file... done.
+Performing single-pass .bed write (278231 variants, 1175 people).
+--file: ./Data/Snps/p1_ibd-temporary.bed + ./Data/Snps/p1_ibd-temporary.bim +
+./Data/Snps/p1_ibd-temporary.fam written.
+278231 variants loaded from .bim file.
+1175 people (0 males, 0 females, 1175 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to ./Data/Snps/p1_ibd.nosex .
+--extract: 180075 variants remaining.
+--keep: 131 people remaining.
+0 people removed due to missing genotype data (--mind).
+Using up to 15 threads (change this with --threads).
+Before main variant filters, 131 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate in remaining samples is exactly 1.
+0 variants removed due to missing genotype data (--geno).
+25908 variants removed due to minor allele threshold(s)
+(--maf/--max-maf/--mac/--max-mac).
+154167 variants and 131 people pass filters and QC.
+Note: No phenotypes present.
+IBD calculations complete.
+Finished writing ./Data/Snps/p1_ibd.genome .
+
+End time: Fri Feb 16 12:59:18 2024

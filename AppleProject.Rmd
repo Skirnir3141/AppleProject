@@ -1,5 +1,5 @@
 ---
-title: 'How About ''Dem Apples: Has Modern Agriculture Reduced Apple Cultivars Genetic Diversity?'
+title: "How 'Bout 'Dem Apples: Has Modern Agriculture Reduced The Genetic Diversity of Apple Cultivars?"
 author: "Michael Jordan"
 output:
   pdf_document:
@@ -29,26 +29,26 @@ library(scales)
 library(cowplot)
 library(stringr)
 
-# TODO: UPDATE THIS SOON NOW
-# Note that executing some of the code below will of course be dependent on 
-# your directory structure and Plink installation. SNP data was downloaded from
-# Dyrad -- https://datadryad.org/stash/dataset/doi:10.5061/dryad.zkh1893cd -- 
-# and extracted to a folder names "snps". Phenomics metadata was downloaded from
-# github -- https://github.com/MylesLab/abc-phenomics/tree/main/data -- and
-# extracted to a folder named "phenomics". Plink v1.90 was downloaded from the
-# cog-genomics.org website -- https://www.cog-genomics.org/plink2/ -- and
-# installed in the /usr/local/bin folder on a computer running Ubuntu and made
+# Note that executing the code below is of course dependent on your directory
+# structure and Plink installation. Directory structure from
+# https://github.com/Skirnir3141/AppleProject/ should be maintained. All files
+# necessary to run this are uploaded on github except for the
+# abc_combined_maf001_sort_vineland_imputed .map and .ped files, which need to
+# be downloaded from https://datadryad.org/stash/dataset/doi:10.5061/dryad.zkh1893cd
+# and extracted to the ./Data/Snps folder. Plink v1.90 should be downloaded from
+# the cog-genomics.org website (https://www.cog-genomics.org/plink2/) and
+# installed in the /usr/local/bin folder on a computer running linux and made
 # globally available per the instructions in this YouTube video:
 # https://www.youtube.com/watch?v=qYo6BbI2KQI&ab_channel=Huy.
 ```
 
 The domestic apple (*Malus domestica*) is one of the oldest, most commonly cultivated, and most valuable fruit crops in the world, ranking second only to the banana in global gross production value (O'Rourke, 2021). Although today *M. domestica* is produced by many countries -- e.g., America, Chile, New Zealand -- it likely originated in Central Asia or Western China and evolved from other *Malus* species, primarily *M. sieversii* (Volk et al., 2021). Following initial domestication, *M. domestica* spread from Asia along the Silk Road to Europe and beyond (Volk et al., 2021).
 
-As *M. domestica* spread, trees with desirable traits were developed as cultivars through vegetative propagation (Volk et al., 2021). Asexual reproduction was necessary because, although apples can reproduce sexually, they are typically self-incompatible and highly heterozygous, meaning that a given cultivar must be pollinated by a different cultivar and that the seedlings will exhibit traits not expressed in either parent tree (Volk et al., 2021). Ergo, asexual reproduction was required to maintain desirable traits.
+As *M. domestica* spread, trees with desirable traits were developed as cultivars through vegetative propagation (Volk et al., 2021). Asexual reproduction was necessary because apples are typically self-incompatible and highly heterozygous, meaning that a given cultivar must be pollinated by a different cultivar and that the seedlings will exhibit traits not expressed in either parent tree (Volk et al., 2021). Therefore, asexual reproduction was required to maintain desirable traits.
 
 Prior to the industrial era apple production was regional, with small farms breeding cultivars for local tastes using trial and error  (O'Rourke, 2021). After industrialization the apple industry became increasingly structured, complex, and globally integrated as new technology allowed apples to be sold over greater distances (O'Rourke, 2021). Today, the apple industry is dominated by large vertically integrated firms that handle all aspects from production to packing to marketing (O'Rourke, 2021). As industry organization became more sophisticated, so to did apple breeding strategies. Controlled breeding programs were established by the early 1800s (Khan et al., 2021). During the 20th century, the apple industry embraced genomics and today uses technologies like genomic sequencing to develop cultivars with desirable traits (Volk et al., 2021).
 
-These structural and technological developments have facilitated a large globally connected industry, but they may have come at the cost of genetic diversity. Pre-industrialization, farmers would have presumably combined whatever cultivars were locally available to them and the fragmented nature of the market would have meant high global cultivar diversity. But, genetic research has shown that many cultivars in collections today are clonally related to just a few commercially dominant cultivars such as McIntosh (Migicovsky et al., 2021).
+These structural and technological developments facilitated a large globally connected industry, but they may have come at the cost of genetic diversity. Pre-industrialization, farmers would have presumably combined whatever cultivars were locally available to them and the fragmented nature of the market would have meant high global diversity. But, genetic research has shown that many accessions in collections today are clonally related to just a few commercially dominant cultivars such as McIntosh (Migicovsky et al., 2021).
 
 However, whether the genetic diversity of newly developed cultivars has actually changed over time is an open question. I hypothesize that the genetic diversity of new apple cultivars has decreased as breeding programs have increasingly exploited a small number of commercially successfully cultivars. If so, this would support the continued maintenance of heritage cultivars as an important reservoir of potentially valuable genotypes.
 
@@ -124,17 +124,17 @@ write.table(keep.p3, "./Data/keep.p3.tsv", sep = "\t", row.names = FALSE)
 # Can't quite figure out how to get Plink to output files here to a given
 # directory, so I'm just changing the wd back and forth as a hack.
 setwd("/home/skirnir314/EECMSc/AppleProject/Data/Snps")
-system("/usr/local/bin/Plink/plink --file ./Data/Snps/abc_combined_maf001_sort_vineland_imputed --indep-pairwise 10 3 0.5")
+system("/usr/local/bin/Plink/plink --file abc_combined_maf001_sort_vineland_imputed --indep-pairwise 10 3 0.5")
 setwd("/home/skirnir314/EECMSc/AppleProject")
 
 # Run IBD analysis in Plink for the three time periods
-system("/usr/local/bin/Plink/plink --file ./Data/Snps/abc_combined_maf001_sort_vineland_imputed --keep ./Data/keep.p1.tsv --extract plink.prune.in --allow-no-sex --geno .05 --mind .1 --maf .01 --genome --out ./Data/Snps/p1_ibd")
-system("/usr/local/bin/Plink/plink --file ./Data/Snps/abc_combined_maf001_sort_vineland_imputed --keep ./Data/keep.p2.tsv --extract plink.prune.in --allow-no-sex --geno .05 --mind .1 --maf .01 --genome --out ./Data/Snps/p2_ibd")
-system("/usr/local/bin/Plink/plink --file ./Data/Snps/abc_combined_maf001_sort_vineland_imputed --keep ./Data/keep.p3.tsv --extract plink.prune.in --allow-no-sex --geno .05 --mind .1 --maf .01 --genome --out ./Data/Snps/p3_ibd")
+system("/usr/local/bin/Plink/plink --file ./Data/Snps/abc_combined_maf001_sort_vineland_imputed --keep ./Data/keep.p1.tsv --extract ./Data/Snps/plink.prune.in --allow-no-sex --geno .05 --mind .1 --maf .01 --genome --out ./Data/Snps/p1_ibd")
+system("/usr/local/bin/Plink/plink --file ./Data/Snps/abc_combined_maf001_sort_vineland_imputed --keep ./Data/keep.p2.tsv --extract ./Data/Snps/plink.prune.in --allow-no-sex --geno .05 --mind .1 --maf .01 --genome --out ./Data/Snps/p2_ibd")
+system("/usr/local/bin/Plink/plink --file ./Data/Snps/abc_combined_maf001_sort_vineland_imputed --keep ./Data/keep.p3.tsv --extract ./Data/Snps/plink.prune.in --allow-no-sex --geno .05 --mind .1 --maf .01 --genome --out ./Data/Snps/p3_ibd")
 
 # Get the genetic distance between individuals using Plink (this is for all
 # periods combined)
-system("/usr/local/bin/Plink/plink --file ./Data/Snps/abc_combined_maf001_sort_vineland_imputed --extract plink.prune.in --allow-no-sex --geno .05 --mind .1 --maf .01 --distance-matrix --out ./Data/Snps/pca")
+system("/usr/local/bin/Plink/plink --file ./Data/Snps/abc_combined_maf001_sort_vineland_imputed --extract ./Data/Snps/plink.prune.in --allow-no-sex --geno .05 --mind .1 --maf .01 --distance-matrix --out ./Data/Snps/pca")
 
 # Import ibd results
 p1.ibd <- read.table("./Data/Snps/p1_ibd.genome", header = TRUE)
@@ -150,11 +150,11 @@ p3.log <- read.delim("./Data/Snps/p3_ibd.log")
 
 To evaluate apple cultivar genetic diversity, I used a dataset of 278,231 SNPs from 1,175 accessions in Canada's Apple Biodiversity Collection (ABC) that were produced using genotype-by-sequencing and made publicly available in [Dryad](https://datadryad.org/stash/dataset/doi:10.5061/dryad.zkh1893cd) (Migicovsky et al., 2022). To described these accessions, I used a dataset produced as part of Watts et al.'s 2022 phenomic characterization of the ABC and made available on [their lab's github](https://github.com/MylesLab/abc-phenomics).
 
-Accessions were filtered using `r substring(R.Version()$version.string, 1, 15)` to include only *M. domestica* accessions with either a cultivation year or a release year (earliest year was used), resulting in `r nrow(apple.p.metadata)` remaining accessions. These were split into three time periods: prior to 1850, 1850-1950, and 1950-2024. These time periods were semi-arbitrary, intended to reflect stages in industry development from pre-industrialization to the modern era.
+Accessions were filtered using `r substring(R.Version()$version.string, 1, 15)` to include only *M. domestica* with either a cultivation year or a release year (earliest year was used). Accessions were also filtered to remove likely polyploids by using the het function in Plink v1.90 to calculate the fixation index per accession and dropping accessions with a fixation index less than 0 (see PloidismExploration.R). This resulted in `r nrow(apple.p.metadata)` remaining accessions. These were split into three time periods: 1800-1899, 1900-1959, and 1960-Present. These time periods were semi-arbitrary, intended to reflect stages in industry development from early industrialization to the modern era.
 
-Accessions were also filtered to remove likely polyploid cultivars by using the het function in Plink v.190 to calculate the fixation index per accession. Accessions with a fixation index less than 0 were dropped (see PloidismExploration.R for details). SNPs were pruned for linkage disequilibrium using the indep-pairwise function in Plink. A window size of 10 SNPs, a window shift of 3 BPs, and an $R^{2}$ of .05 were used. SNPs with a minor allele frequency of less than .01 and a missingness of greater than .05 were also removed. Accessions with greater than .1 missingness were removed. This resulted in `r prettyNum(as.numeric(stringr::word(p1.log[33, 1], 1)), scientific = FALSE)` SNPS and `r prettyNum(as.numeric(stringr::word(p1.log[33, 1], 4)), scientific = FALSE)` accessions for P1, `r prettyNum(as.numeric(stringr::word(p2.log[33, 1], 1)), scientific = FALSE)` SNPs and `r prettyNum(as.numeric(stringr::word(p2.log[33, 1], 4)), scientific = FALSE)` accessions for P2, and `r prettyNum(as.numeric(stringr::word(p3.log[33, 1], 1)), scientific = FALSE)` SNPs and `r prettyNum(as.numeric(stringr::word(p3.log[33, 1], 4)), scientific = FALSE)` accessions for P3.
+SNPs were pruned for linkage disequilibrium using the indep-pairwise function in Plink. A window size of 10 SNPs, a window shift of 3 BPs, and an $R^{2}$ of .05 were used. SNPs with a minor allele frequency of less than .01 and a missingness of greater than .05 were also removed. Accessions with greater than .1 missingness were removed. This resulted in `r prettyNum(as.numeric(stringr::word(p1.log[33, 1], 1)), big.mark = ",", scientific = FALSE)` SNPS and `r prettyNum(as.numeric(stringr::word(p1.log[33, 1], 4)), big.mark = ",", scientific = FALSE)` accessions for P1, `r prettyNum(as.numeric(stringr::word(p2.log[33, 1], 1)), big.mark = ",", scientific = FALSE)` SNPs and `r prettyNum(as.numeric(stringr::word(p2.log[33, 1], 4)), big.mark = ",", scientific = FALSE)` accessions for P2, and `r prettyNum(as.numeric(stringr::word(p3.log[33, 1], 1)), big.mark = ",", scientific = FALSE)` SNPs and `r prettyNum(as.numeric(stringr::word(p3.log[33, 1], 4)), big.mark = ",", scientific = FALSE)` accessions for P3.
 
-I estimated IBD among cultivars launched in each period as well as the genetic distance (Hamming distance) among cultivars across all periods using Plink. IBD networks were visualized using the tidygraph and ggraph R packages with a Fruchterman-Reingold layout algorithm. Only cultivars with a $\hat{\pi}$ (proportion of inheritance) greater than .125 were considered related (i.e., I filtered for 3rd degree relationships or closer). Genetic distance PCA was completed in R using the same accessions and SNPS.
+I estimated IBD among cultivars developed in each period as well as the genetic distance (Hamming distance) among cultivars across all periods using Plink. IBD networks were visualized using the tidygraph and ggraph R packages with a Fruchterman-Reingold layout algorithm. Only cultivars with a $\hat{\pi}$ (proportion of inheritance) greater than .125 were considered related (i.e., I filtered for 3rd degree relationships or closer). Genetic distance PCA was completed in R using the same accessions and SNPS.
 
 ## Results
 ```{r import_ibd, echo=FALSE, error=FALSE, warning=FALSE, message=FALSE}
@@ -221,14 +221,14 @@ eigenvec <- dplyr::left_join(eigenvec, map2, by = join_by(IID == apple_id))
 eigen.perc <- round(((mds$eig) / sum(mds$eig)) * 100, 2)
 ```
 
-Per Figure 1, results showed that cultivar relatedness increased in each period. Looking at accession relatedness using IBD, the percentage of accessions that had at least one relationship increased from `r scales::percent(round(nrow(as_tibble(activate(p1.graph, nodes))) / nrow(p1.nodes), digits = 2))` in P1 to `r scales::percent(round(nrow(as_tibble(activate(p2.graph, nodes))) / nrow(p2.nodes), digits = 2))` in P2 to `r scales::percent(round(nrow(as_tibble(activate(p3.graph, nodes))) / nrow(p3.nodes), digits = 2))` in P3. Plotting networks of related accessions, we can see that cultivars became more related to each other in each period as indicated visually by increased number of connections and density of nodes. Extracting the global efficiency of each graph confirms this. From `r scales::percent(round(igraph::global_efficiency(p1.graph), digits = 2))` in P1, it increases to `r scales::percent(round(igraph::global_efficiency(p2.graph), digits = 2))` in P2 and then `r scales::percent(round(igraph::global_efficiency(p3.graph), digits = 2))` in P3.
+Per Figure 1, results showed that cultivar relatedness increased in each period. Looking at accession relatedness using IBD, the percentage of accessions that had at least one relationship increased from `r scales::percent(round(nrow(as_tibble(activate(p1.graph, nodes))) / nrow(p1.nodes), digits = 2))` in P1 to `r scales::percent(round(nrow(as_tibble(activate(p2.graph, nodes))) / nrow(p2.nodes), digits = 2))` in P2 to `r scales::percent(round(nrow(as_tibble(activate(p3.graph, nodes))) / nrow(p3.nodes), digits = 2))` in P3. Plotting networks of accessions with at least one relationship, we can see that cultivars became more related to each other in each period as indicated visually by increased number of connections and density of nodes. Extracting the global efficiency of each graph confirms this. From `r scales::percent(round(igraph::global_efficiency(p1.graph), digits = 2))` in P1, it increased to `r scales::percent(round(igraph::global_efficiency(p2.graph), digits = 2))` in P2 and then `r scales::percent(round(igraph::global_efficiency(p3.graph), digits = 2))` in P3.
 
-However, despite increased relatedness across periods, we can also see in Figure 1 that the PCA of the first two axes of ordination of genetic distance between accessions did not suggest any difference in the genetic diversity of accessions between periods. This can be concluded because SNPs from all periods are contiguous on the graph.
+However, despite increased relatedness across periods, we can also see in Figure 1 that the first two principle components of the genetic distance PCA did not suggest any difference in the genetic diversity of accessions between periods. This can be concluded because accessions from all periods occupy contiguous graph space.
 
-``` {r graph_networks, echo=FALSE, fig.align="center", fig.height=3, fig.cap="Newtork graphs related accessions and PCA of SNPs across all accessions.", error=FALSE, warning=FALSE, message=FALSE}
+``` {r graph_networks, echo=FALSE, fig.align="center", fig.height=3, fig.cap="Network graphs of related accessions and PCA of SNPs across all accessions.", error=FALSE, warning=FALSE, message=FALSE}
 
 # Create plots for IBD networks
-p1.plot <- ggraph::ggraph(p1.graph, layout = 'fr', weights = weight) + 
+p1.plot <- ggraph::ggraph(p1.graph, layout = "fr", weights = weight) + 
   ggraph::geom_edge_link(aes(width = weight)) +
   ggraph::scale_edge_width(range = c(0.1, 3)) +
   ggraph::geom_node_point(
@@ -237,7 +237,7 @@ p1.plot <- ggraph::ggraph(p1.graph, layout = 'fr', weights = weight) +
     fill = "green",
     color = "black") +
   ggplot2::theme(legend.position = "none")
-p2.plot <- ggraph::ggraph(p2.graph, layout = 'fr', weights = weight) + 
+p2.plot <- ggraph::ggraph(p2.graph, layout = "fr", weights = weight) + 
   ggraph::geom_edge_link(aes(width = weight)) +
   ggraph::scale_edge_width(range = c(0.1, 3)) +
   ggraph::geom_node_point(
@@ -246,7 +246,7 @@ p2.plot <- ggraph::ggraph(p2.graph, layout = 'fr', weights = weight) +
     fill = "green",
     color = "black") +
   ggplot2::theme(legend.position = "none")
-p3.plot <- ggraph::ggraph(p3.graph, layout = 'fr', weights = weight) + 
+p3.plot <- ggraph::ggraph(p3.graph, layout = "fr", weights = weight) + 
   ggraph::geom_edge_link(aes(width = weight)) +
   ggraph::scale_edge_width(range = c(0.1, 3)) +
   ggraph::geom_node_point(
@@ -255,7 +255,7 @@ p3.plot <- ggraph::ggraph(p3.graph, layout = 'fr', weights = weight) +
     fill = "green",
     color = "black") +
   ggplot2::theme(legend.position = "none")
-dummy.plot <- ggraph::ggraph(p3.graph, layout = 'fr', weights = weight) + 
+dummy.plot <- ggraph::ggraph(p3.graph, layout = "fr", weights = weight) + 
   ggraph::geom_edge_link(aes(width = weight)) +
   ggraph::scale_edge_width(range = c(0.1, 3)) +
   ggraph::geom_node_point(
@@ -268,12 +268,12 @@ dummy.plot <- ggraph::ggraph(p3.graph, layout = 'fr', weights = weight) +
 related.counts <- data.frame(
   Period = c("P1", "P1", "P2", "P2", "P3", "P3"),
   Related = c(
-    ">= 1 Rel.",
-    "0 Rel.",
-    ">= 1 Rel.",
-    "0 Rel.",
-    ">= 1 Rel.",
-    "0 Rel."),
+    "Rel.",
+    "Unrel.",
+    "Rel.",
+    "Unrel.",
+    "Rel.",
+    "Unrel."),
   Accessions = c(
     nrow(as_tibble(activate(p1.graph, nodes))),
     nrow(p1.nodes) - nrow(as_tibble(activate(p1.graph, nodes))),
@@ -283,14 +283,14 @@ related.counts <- data.frame(
     nrow(p3.nodes) - nrow(as_tibble(activate(p3.graph, nodes)))))
 related.counts <- related.counts %>%
   group_by(Period) %>%
-  arrange(Related) %>%
+  arrange(desc(Related)) %>%
   mutate(label_y = cumsum(Accessions))
-bar1 <- ggplot2::ggplot(
+bar1.plot <- ggplot2::ggplot(
   related.counts, aes(fill = Related, y = Accessions, x = Period)) + 
   ggplot2::geom_bar(position="stack", stat="identity") +
   ggplot2::geom_text(
     aes(y = label_y, label = Accessions),
-    vjust = 1.5,
+    vjust = 1.2,
     color = "white") +
   ggplot2::theme(
     legend.position = "top",
@@ -300,7 +300,7 @@ bar1 <- ggplot2::ggplot(
     axis.title.y = element_blank())
 
 # Create plot for PCA
-p4 <- ggplot2::ggplot(data = eigenvec[!is.na(eigenvec$Period), ]) +
+p4.plot <- ggplot2::ggplot(data = eigenvec[!is.na(eigenvec$Period), ]) +
   ggplot2::geom_point(
     mapping = aes(x = `1`, y = `2`, color = as.factor(Period)),
     show.legend = TRUE) +
@@ -315,9 +315,29 @@ p4 <- ggplot2::ggplot(data = eigenvec[!is.na(eigenvec$Period), ]) +
     y = paste0("Principle Component 2 (", eigen.perc[2], " %)")) +
   ggplot2::theme(legend.position = "top")
 
+# Save plot pngs
+png(file = "./Pngs/p1.plot.png")
+p1.plot
+dev.off()
+png(file = "./Pngs/p2.plot.png")
+p2.plot
+dev.off()
+png(file = "./Pngs/p3.plot.png")
+p3.plot
+dev.off()
+png(file = "./Pngs/p4.plot.png")
+p4.plot
+dev.off()
+png(file = "./Pngs/bar1.plot.png")
+bar1.plot
+dev.off()
+png(file = "./Pngs/net.legend.png")
+plot(cowplot::get_legend(dummy.plot))
+dev.off()
+
 # Create cowplot grid for IBD networks
 g1 <- cowplot::plot_grid(
-  bar1,
+  bar1.plot,
   p1.plot,
   p2.plot,
   p3.plot,
@@ -328,52 +348,43 @@ g1 <- cowplot::plot_grid(
   label_size = 14,
   label_fontfamily = "serif",
   hjust = -.7,
-  vjust = 2.0)
+  vjust = 2.0,
+  scale = 1.05)
 
-cowplot::plot_grid(g1, p4)
+cowplot::plot_grid(g1, p4.plot)
 ```
 
 ## Discussion
 
-At first glance, these data suggest two disparate conclusions. On the one hand, new cultivars are becoming more closely related. On the other hand, they are no less genetically diverse. This circle can be squared, but, first, it's worth mentioning some caveats.
+It's worth mentioning three caveats to this analysis. First, the accessions used in this study are not a random sample of cultivars developed across the different time periods, but instead represent cultivars that happened to be preserved and pass my filters. If preservation and filtering was non-random, then this analysis will be a biased measure of true cultivar relatedness and diversity across periods  (and in fact the ABC is biased toward cultivars from Canada and the US).
 
-Notably, the accessions used in this study are not a random sample of cultivars developed in the different time periods, but instead represent cultivars that happened to be preserved. If preservation was non-random, then they may not reflect true cultivar diversity in the periods (and in fact the ABC is biased toward cultivars from Canada and the US).
+Second, I picked time periods semi-arbitrarily. It would have been preferable to develop a more detailed understanding of exactly when the apple industry developed new breeding techniques and use that information to define period boundaries. But, this information did not arise in my reading of the literature.
 
-Another important caveat is that Plink's estimate of IBD is imperfect as described in Stevens et al. (2011), where Plink was compared to another methods. That said, although those studies captured a difference between Plink and other methods, there was significant consistency between methods in both. Additionally, spot-checking Plink's results versus known relationships confirms that the results are reasonable. For example, in P3 Plink identified [Redspur Delicious](https://pomiferous.com/applebyname/redspur-delicious-id-8258) and [BisBee](https://pomiferous.com/applebyname/bisbee-id-770) as having a $\hat{\pi}$ of `r scales::percent(round(p3.ibd[p3.ibd$Cultivar1 == "Redspur Delicious" & p3.ibd$Cultivar2 == "Bisbee", ]$PI_HAT, digits = 2))` indicating a clonal relationship and these two cultivars are both known to be a mutation of the [Starking Delicious](https://pomiferous.com/applebyname/starking-delicious-id-8238) cultivar.
+Finally, Plink's estimation of IBD is imperfect. When researchers have compared Plink to other IBD methods, they have found some significant differences (Stevens et al., 2011). That said, there was also significant consistency and I was able to confirm that Plink's IBD results were reasonable by comparing them to known relationships. For example, Plink identified [Sir Prize](https://pomiferous.com/applebyname/co-op-5-id-1464) and [Clear Gold](https://pomiferous.com/applebyname/clearwater-gold-id-1373) as having a $\hat{\pi}$ of `r scales::percent(round(p3.ibd[p3.ibd$Cultivar1 == "Sir Prize" & p3.ibd$Cultivar2 == "Clear Gold", ]$PI_HAT, digits = 2))` indicating a 1st degree relationship. This makes sense, since Clear Gold is a mutation of a Golden Delicious and Sir Prize is a cross between Golden Delicious and another cultivar.
 
-Overall, I believe these results suggest that apple breeders have become increasingly reliant on a smaller number of cultivars. However, the high heterozygosity of apples has prevented this from resulting in a lack of genetic diversity.
+Caveats aside, I think these results are cause for both caution and peace of mind regarding apple cultivar genetic diversity. On the one hand, newly developed cultivars did become more related to each other over time, supporting the idea that the industry may be increasingly relying on a small number of cultivars to develop new apples whereas in the past it may have used a wider variety. On the other hand, a PCA of genetic distance between cultivars did not show any corresponding loss in genetic diversity over time. My read of these two seemingly disparate results is that the extremely high heterozygosity of apples may have prevented a genetic bottleneck up to now despite the increasing relatedness of new cultivars.
 
 ## Conclusion
 
-Although we may not be at a stage of domestication with the apple where breeding has significantly constrained genetic variation in favor of a small number of genotypes that produce phenotypes valued by the global marketplace, I would still advocate for continued preservation of heritage apple cultivars. They represent not just a window into what phenotypes people found valuable in the past, but also a potential source of inspiration for the development of new cultivars. Although the global market may push breeders to develop apples with consistent phenotypes in terms of storage, acidity, flavor, etc., consumers also like novelty. Using heritage cultivars as a springboard may be the best way forward in terms of commericial breeding.
+While it is comforting to know that we are not at a stage of apple domestication where breeding has significantly constrained genetic diversity, I would still advocate for continued preservation of heritage apple cultivars on two bases. First, although the increased reliance on a small number of cultivars for breeding new apples has not yet significantly constrained apple genetic diversity, it may in the future and in the case that it does having heritage cultivars available to use for selecting new traits will be important. Second, heritage cultivars represent a window into what phenotypes people found valuable in the past, which is interesting historically and is in a sense a type of cultural heritage that in my opinion is worth preserving.
 
 ## Reference List
 
-Khan, A., Gutierrez, B., Chao, C.T., & Singh, J. (2021) [Origin of the Domesticated Apples](https://link-springer-com.iclibezp1.cc.ic.ac.uk/chapter/10.1007/978-3-030-74682-7_17). In: Podwyszyńska, M., & Marasek-Ciołakowska, A. (eds.) (2021) *The Apple Genome, Edition 1*. Springer Cham, pp. 383-394.
+Khan, A., Gutierrez, B., Chao, C.T., & Singh, J. (2021) [Origin of the Domesticated Apples](https://link-springer-com.iclibezp1.cc.ic.ac.uk/chapter/10.1007/978-3-030-74682-7_17). In: Podwyszyńska, M., & Marasek-Ciołakowska, A. (eds.) (2021) *The Apple Genome*. Springer Cham, pp. 383-394.
 
 Migicovsky, Z., Douglas, G.M., & Myles, S. (2022) [Genotyping-by-sequencing of Canada’s apple biodiversity collection](https://doi.org/10.3389/fgene.2022.934712). *Genomics of Plants and the Phytoecosystem*. 13.
 
 Migicovsky, Z., Gardner, K.M., Richards, C., Chao, C.T., Schwaninger, H.R., Fazio, G., Zhong, G., & Myles, S. (2021) [Genomic consequences of apple improvement](https://doi.org/10.1038/s41438-020-00441-7). *Horticultural Research*. 8.
 
-O'Rourke, D. (2021) [Economic Importance of the World Apple Industry](https://link-springer-com.iclibezp1.cc.ic.ac.uk/chapter/10.1007/978-3-030-74682-7_1). In: Podwyszyńska, M., & Marasek-Ciołakowska, A. (eds.) (2021) *The Apple Genome, Edition 1*. Springer Cham, pp. 1-18.
+O'Rourke, D. (2021) [Economic Importance of the World Apple Industry](https://link-springer-com.iclibezp1.cc.ic.ac.uk/chapter/10.1007/978-3-030-74682-7_1). In: Podwyszyńska, M., & Marasek-Ciołakowska, A. (eds.) (2021) *The Apple Genome*. Springer Cham, pp. 1-18.
 
 Stevens, E.L.,Heckenberg, G., Roberson, E.D.O., Baugher, J.D., Downey, T.J., & Pevsner, J. (2011) [Inference of Relationships in Population Data Using Identity-by-Descent and Identity-by-State](https://doi.org/10.1371/journal.pgen.1002287). Plos Genetics. 
 
-Volk, G.M., Cornille, A., Durel, C.E., & Gutierrez, B. (2021) 
-[Botany, Taxonomy, and Origins of the Apple](https://link-springer-com.iclibezp1.cc.ic.ac.uk/chapter/10.1007/978-3-030-74682-7_2). In: Podwyszyńska, M., & Marasek-Ciołakowska, A. (eds.) (2021) *The Apple Genome, Edition 1*. Springer Cham, pp. 19-32.
+Volk, G., Cornille, A., Durel, C., & Gutierrez, B. (2021) 
+[Botany, Taxonomy, and Origins of the Apple](https://link-springer-com.iclibezp1.cc.ic.ac.uk/chapter/10.1007/978-3-030-74682-7_2). In: Podwyszyńska, M., & Marasek-Ciołakowska, A. (eds.) (2021) *The Apple Genome*. Springer Cham, pp. 19-32.
 
 Watts, S., Migicovsky, Z., & Myles, S. (2023) [Large-scale apple GWAS reveals NAC18.1 as a master regulator of ripening traits](https://doi.org/10.48130/FruRes-2023-0032). *Fruit Research*. 3.
 
-## Bibliography
+\newpage
+## Working Style Assessment
 
-Baric, S., Storti, A., Hofer, M., Guerra, W., & Dalla Via, J. (2020) [Molecular Genetic Identification of Apple Cultivars Based on Microsatellite DNA Analysis. I. The Database of 600 Validated Profiles](https://doi.org/10.1007/s10341-020-00483-0). *Erwerbs-Obstbau*. 62, 117-154.
-
-Mészáros, G., Mészárosová, M., &  Geretschläger, A. (2020) [Comparison of identity by descent estimates with Plink and refinedIBD in dogs](https://doi.org/10.15414/afz.2020.23.04.213-216). *Acta Fytotechn Zootechn*. 23 (4), 213-216.
-
-Watts, S., Migicovsky, Z., McClure, K.A., Yu, C.H.J., Amyotte, B., Baker, T., Bowlby, D., Burgher-MacLellan, K., Butler, L., Donald, R., Fan, L., Fillmore, S., Flewelling, J., Gardner, K., Hodges, M., Hughes, T., Jagadeesan, V., Lewis, N., MacDonell, E., MacVicar, L., McElroy, M., Money, D., O'Hara, M., Ong, Q., Palmer, L.C., Sawler, J., Vinqvist-Tymchuk, M., Rupasinghe, HPV., DeLong, J.M., Forney, C.F., Song, J., & Myles, S. (2021) Quantifying apple diversity: A phenomic characterization of Canada’s Apple Biodiversity Collection. *Plants People Planet*. 3 (6), 747-760. https://doi.org/10.1002/ppp3.10211
-
-Xue, H., Zhang, B., Tian, J., Chen, M., Zhang, Y., Zhang, Z., & Ma, Y. (2017) Comparison of the morphology, growth and development of diploid and autotetraploid ‘Hanfu’ apple trees. *Scientia Horticulturae*. 225, 277-285. https://doi.org/10.1016/j.scienta.2017.06.059
-
-Podwyszyńska, M., Markiewicz, M., Matysiak, B., & Marasek-Ciołakowska, A. (2021) Apple Autotetraploids with Enhanced Resistance to Apple Scab (*Venturia inaequalis*) Due to Genome Duplication-Phenotypic and Genetic Evaluation. *International Journal of Molecular Sciences*. 22 (2), 527. https://doi.org/10.3390/ijms22020527
-
-Robinson, D.O., Coate, J.E., Singh, A., Hong, L., Bush, M., Doyle, J.J., & Roeder, A.H.K. (2018) Ploidy and Size at Multiple Scales in the Arabidopsis Sepal. *The Plant Cell*. 30 (10), 2308-2329. https://doi.org/10.1105/tpc.18.00344 
