@@ -315,26 +315,6 @@ p4.plot <- ggplot2::ggplot(data = eigenvec[!is.na(eigenvec$Period), ]) +
     y = paste0("Principle Component 2 (", eigen.perc[2], " %)")) +
   ggplot2::theme(legend.position = "top")
 
-# Save plot pngs
-png(file = "./Pngs/p1.plot.png")
-p1.plot
-dev.off()
-png(file = "./Pngs/p2.plot.png")
-p2.plot
-dev.off()
-png(file = "./Pngs/p3.plot.png")
-p3.plot
-dev.off()
-png(file = "./Pngs/p4.plot.png")
-p4.plot
-dev.off()
-png(file = "./Pngs/bar1.plot.png")
-bar1.plot
-dev.off()
-png(file = "./Pngs/net.legend.png")
-plot(cowplot::get_legend(dummy.plot))
-dev.off()
-
 # Create cowplot grid for IBD networks
 g1 <- cowplot::plot_grid(
   bar1.plot,
@@ -365,6 +345,28 @@ Finally, Plink's estimation of IBD is imperfect. When researchers have compared 
 Caveats aside, I think these results are cause for both caution and peace of mind regarding apple cultivar genetic diversity. On the one hand, newly developed cultivars did become more related to each other over time, supporting the idea that the industry may be increasingly relying on a small number of cultivars to develop new apples whereas in the past it may have used a wider variety. On the other hand, a PCA of genetic distance between cultivars did not show any corresponding loss in genetic diversity over time. My read of these two seemingly disparate results is that the extremely high heterozygosity of apples may have prevented a genetic bottleneck up to now despite the increasing relatedness of new cultivars.
 
 ## Conclusion
+
+``` {r save_pngs, echo=FALSE, results=FALSE, error=FALSE, warning=FALSE, message=FALSE}
+# Save plot pngs
+png(file = "./Pngs/p1.plot.png")
+p1.plot
+dev.off()
+png(file = "./Pngs/p2.plot.png")
+p2.plot
+dev.off()
+png(file = "./Pngs/p3.plot.png")
+p3.plot
+dev.off()
+png(file = "./Pngs/p4.plot.png")
+p4.plot
+dev.off()
+png(file = "./Pngs/bar1.plot.png")
+bar1.plot
+dev.off()
+png(file = "./Pngs/net.legend.png")
+plot(cowplot::get_legend(dummy.plot))
+dev.off()
+```
 
 While it is comforting to know that we are not at a stage of apple domestication where breeding has significantly constrained genetic diversity, I would still advocate for continued preservation of heritage apple cultivars on two bases. First, although the increased reliance on a small number of cultivars for breeding new apples has not yet significantly constrained apple genetic diversity, it may in the future and in the case that it does having heritage cultivars available to use for selecting new traits will be important. Second, heritage cultivars represent a window into what phenotypes people found valuable in the past, which is interesting historically and is in a sense a type of cultural heritage that in my opinion is worth preserving.
 
