@@ -328,3 +328,33 @@ cowplot::plot_grid(
   vjust = 2.0,
   scale = 1.02)
 
+# Average degree of network
+mean(degree(p3.graph))
+
+# Clustering coefficient
+transitivity(p1.graph)
+
+# Size of the largest component
+igraph::components(p2.graph, mode = "weak")
+
+igraph::degree(p1.graph)
+igraph::degree_distribution(p1.graph)
+
+hist(igraph::degree(p1.graph))
+
+mean(igraph::closeness(p1.graph))
+mean(igraph::betweenness(p3.graph))
+
+
+ggraph::ggraph(p3.graph, layout = "fr", weights = weight) + 
+  ggplot2::ggtitle("P3: ") +
+  ggraph::geom_edge_link(aes(width = weight)) +
+  ggraph::scale_edge_width(range = c(0.1, 3)) +
+  ggraph::geom_node_point(
+    aes(size = tidygraph::centrality_pagerank()),
+    shape = 21,
+    fill = "green",
+    color = "black") +
+  ggplot2::theme(
+    plot.title = element_text(hjust = .5),
+    legend.position = "none")
