@@ -128,7 +128,10 @@ apple.p.metadata <- apple.p.metadata[, c(1:6, 15)]
 
 # Join inbreeding coefficient to accession data
 ploidy.check <- read.table("./Data/Snps/ploidy-check.het", header = TRUE)
-apple.p.metadata <- dplyr::left_join(apple.p.metadata, ploidy.check[, c("IID", "F")], by = join_by(apple_id == IID))
+apple.p.metadata <- dplyr::left_join(
+  apple.p.metadata,
+  ploidy.check[, c("IID", "F")],
+  by = join_by(apple_id == IID))
 
 # As expected, triploid accessions show up as having abnormally high
 # heterozygosity as measured by the inbreeding coefficient.

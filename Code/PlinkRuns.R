@@ -22,7 +22,7 @@ system("/usr/local/bin/Plink/plink --file ./Data/Snps/abc_combined_maf001_sort_v
 system("/usr/local/bin/Plink/plink --file ./Data/Snps/abc_combined_maf001_sort_vineland_imputed --keep ./Data/keep.p2.tsv --extract ./Data/Snps/plink.prune.in --allow-no-sex --geno .05 --mind .1 --maf .01 --genome --out ./Data/Snps/p2_ibd")
 system("/usr/local/bin/Plink/plink --file ./Data/Snps/abc_combined_maf001_sort_vineland_imputed --keep ./Data/keep.p3.tsv --extract ./Data/Snps/plink.prune.in --allow-no-sex --geno .05 --mind .1 --maf .01 --genome --out ./Data/Snps/p3_ibd")
 
-# Get the genetic distance between individuals using Plink (this is for all
+# Get the genetic distance between accessions using Plink (this is for all
 # periods combined)
 system("/usr/local/bin/Plink/plink --file ./Data/Snps/abc_combined_maf001_sort_vineland_imputed --extract ./Data/Snps/plink.prune.in --allow-no-sex --geno .05 --mind .1 --maf .01 --distance-matrix --out ./Data/Snps/pca")
 

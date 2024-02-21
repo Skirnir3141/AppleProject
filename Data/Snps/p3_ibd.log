@@ -12,9 +12,9 @@ Options in effect:
 
 Hostname: skirnir314-XPS-9320
 Working directory: /home/skirnir314/EECMSc/AppleProject
-Start time: Fri Feb 16 15:22:45 2024
+Start time: Wed Feb 21 23:19:00 2024
 
-Random number seed: 1708096965
+Random number seed: 1708557540
 31714 MB RAM detected; reserving 15857 MB for main workspace.
 Scanning .ped file... done.
 Performing single-pass .bed write (278231 variants, 1175 people).
@@ -38,4 +38,4 @@ Note: No phenotypes present.
 IBD calculations complete.
 Finished writing ./Data/Snps/p3_ibd.genome .
 
-End time: Fri Feb 16 15:22:52 2024
+End time: Wed Feb 21 23:19:07 2024
