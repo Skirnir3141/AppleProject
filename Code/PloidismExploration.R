@@ -1,3 +1,4 @@
+# Clear environment and set working directory
 rm(list = ls())
 setwd("/home/skirnir314/EECMSc/AppleProject")
 
